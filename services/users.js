@@ -5,8 +5,7 @@ var TYPES = require('tedious').TYPES;
 exports.authenticate = function(context, callback, response) {
 	var that = this;
 	var user = [];
-
-	var failed1 = function(dataset, err) { console.log("fail-1"); console.log(err); callback(400, [], response);};
+	var failed1 = function(dataset, err) { console.log("fail-users-authenticate"); console.log(err); callback(400, [], response);};
 	
 	var p1CheckPassword = function(dataset, err) {
 		if (dataset[0].password == context.password) {
@@ -34,4 +33,23 @@ exports.authenticate = function(context, callback, response) {
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GetUserByLogin", params1, p1CheckPassword, failed1)});
 	
 	p1.then(p1CheckPassword).then(p2CreateAccess).catch(failed1);
-}
+};
+
+exports.create = function(context, callback, response) {
+	var failed1 = function(dataset, err) { console.log("fail-users-create"); console.log(err); callback(400, [], response);};
+	var f = function() {
+		callback(200, [], response);	
+	};
+	
+	console.log("create user");
+	var params1 = [];
+	params1.push({name: "lastName" , type: TYPES.VarChar, value: context.lastName});
+	params1.push({name: "firstName" , type: TYPES.VarChar, value: context.firstName});
+	params1.push({name: "login" , type: TYPES.VarChar, value: context.login});
+	params1.push({name: "password" , type: TYPES.VarChar, value: context.password});
+	params1.push({name: "email" , type: TYPES.VarChar, value: context.email});
+	params1.push({name: "groupeRef" , type: TYPES.VarChar, value: context.groupe});
+	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
+	
+	p1.then(f).catch(failed1);
+};

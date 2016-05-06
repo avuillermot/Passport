@@ -12,18 +12,24 @@ app.use(httpConfig.allowCrossDomain);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
+app.post('/',function(req, res) {
+	var context = {
+		lastName: req.body.lastName,
+		firstName: req.body.password,
+		login: req.body.email,
+		password: req.body.password,
+		email: req.body.email,
+		groupe: req.body.groupe
+	};
+	sUsers.create(context, httpConfig.callback, res);
+});
+
 app.put('/authenticate', function(req, res){
-	try {
-		console.log(req.body);
-		var context = {
-			login: req.body.login,
-			password: req.body.password
-		};
-		sUsers.authenticate(context, httpConfig.callback, res);
-	}
-	catch(ex) {
-		httpConfig.callback(400,[],res);
-	}
+	var context = {
+		login: req.body.login,
+		password: req.body.password
+	};
+	sUsers.authenticate(context, httpConfig.callback, res);
 });
 
 app.put('/checkToken', function(request, response){
