@@ -38,7 +38,7 @@ exports.authenticate = function(context, callback, response) {
 exports.create = function(context, callback, response) {
 	var failed1 = function(dataset, err) { console.log("fail-users-create"); console.log(err); callback(400, [], response);};
 	var f = function() {
-		callback(200, [], response);	
+		callback(200, context, response);	
 	};
 	
 	console.log("create user");

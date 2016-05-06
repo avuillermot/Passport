@@ -11,7 +11,7 @@ exports.checkToken = function(context, callback, response) {
 	
 	var pCheck = function(dataset, err) {
 		if (dataset[0].checked == 1) {
-			callback(200, {checked: true}, response);
+			callback(200, dataset[0], response);
 			console.log("token valid : " + context.token);
 		}
 		else {

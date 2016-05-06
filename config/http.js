@@ -20,18 +20,11 @@ var callback = function(code, content, response) {
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Content-Type', 'application/json');
 
-  // Si le code est différent de 200, erreur
-  if (code != 200 ){
-    content = {
+  content = {
       "code": code,
       "status": http.STATUS_CODES[code],
       "info" : content
-    };
-  }
-
-  if ('object' != typeof content) {
-    content = {"result":content};
-  }
+  };
 
   response.writeHead(code);
   // On renvoi le résultat
