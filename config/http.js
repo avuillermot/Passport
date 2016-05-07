@@ -14,7 +14,7 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-var callback = function(code, content, response) {
+var callback = function(code, info, response) {
 
   // Paramétrage du header
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,7 +23,7 @@ var callback = function(code, content, response) {
   content = {
       "code": code,
       "status": http.STATUS_CODES[code],
-      "info" : content
+      "info" : info
   };
 
   response.writeHead(code);

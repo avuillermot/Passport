@@ -13,14 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 app.post('/',function(req, res) {
-	var context = {
-		lastName: req.body.lastName,
-		firstName: req.body.password,
-		login: req.body.email,
-		password: req.body.password,
-		email: req.body.email,
-		groupe: req.body.groupe
-	};
+	var context = req.body;
+	if (req.body.login == null) context.login = req.body.email;
 	sUsers.create(context, httpConfig.callback, res);
 });
 
