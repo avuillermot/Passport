@@ -4,7 +4,7 @@ var httpConfig = require("./config/http");
 var express = require("express");
 var bodyParser = require('body-parser');
 
-var sUsers = require("./services/users");
+var sUsers = require("./services/user");
 var sPassport = require("./services/passport");
 
 var app = express();
