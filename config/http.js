@@ -33,3 +33,4 @@ var callback = function(code, info, response) {
 
 exports.callback = callback;
 exports.allowCrossDomain = allowCrossDomain;
+exports.portConfig = 8082;

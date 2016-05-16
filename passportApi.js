@@ -38,7 +38,7 @@ app.put('/checkToken', function(request, response){
 //********************************
 // run http server
 //********************************	
-app.listen(8082);
+app.listen(httpConfig.portConfig);
 
 
 // Console will print the message
