@@ -54,6 +54,9 @@ exports.create = function(context, callback, response) {
 	params1.push({name: "password" , type: TYPES.VarChar, value: context.password});
 	params1.push({name: "email" , type: TYPES.VarChar, value: context.email});
 	params1.push({name: "groupeRef" , type: TYPES.VarChar, value: context.groupe});
+	params1.push({name: "phone" , type: TYPES.VarChar, value: context.phone});
+	params1.push({name: "phoneCountryCode" , type: TYPES.VarChar, value: context.phoneCountryCode});
+	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
