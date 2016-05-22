@@ -8,7 +8,8 @@ exports.authenticate = function(context, callback, response) {
 	var failed1 = function(dataset, err) { console.log("fail-users-authenticate"); console.log(err); callback(400, [], response);};
 	
 	var p1CheckPassword = function(dataset, err) {
-		if (dataset[0].password == context.password) {
+		if (dataset === undefined || dataset[0] == undefined) callback(400, [], response);
+		else if (dataset[0].password == context.password) {
 			that.user = dataset[0];
 			console.log("user valid : " + that.user.id);
 			var params2 = [];

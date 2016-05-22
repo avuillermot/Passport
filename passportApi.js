@@ -19,11 +19,15 @@ app.post('/',function(req, res) {
 });
 
 app.put('/authenticate', function(req, res){
-	var context = {
-		login: req.body.login,
-		password: req.body.password
-	};
-	sUsers.authenticate(context, httpConfig.callback, res);
+	console.log(req.body.login);
+	if (req.body == null || req.body.login === undefined || req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
+	else {
+		var context = {
+			login: req.body.login,
+			password: req.body.password
+		};
+		sUsers.authenticate(context, httpConfig.callback, res);
+	}
 });
 
 app.put('/checkToken', function(request, response){
