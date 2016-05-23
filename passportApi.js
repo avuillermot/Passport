@@ -30,13 +30,21 @@ app.put('/authenticate', function(req, res){
 	}
 });
 
-app.put('/checkToken', function(request, response){
+app.put('/check/token', function(request, response){
 	console.log(request.body);
 	var context = {
 		token: request.body.tokenId,
 		module: request.body.module
 	};
 	sPassport.checkToken(context, httpConfig.callback, response);
+});
+
+app.put('/refresh/token', function(request, response){
+	console.log(request.body);
+	var context = {
+		accessId: request.body.accessId
+	};
+	sPassport.refreshToken(context, httpConfig.callback, response);
 });
 
 //********************************
