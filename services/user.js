@@ -62,3 +62,19 @@ exports.create = function(context, callback, response) {
 	
 	p1.then(f).catch(failed1);
 };
+
+exports.get = function(context, callback, response) {
+	var failed1 = function(dataset, err) { console.log("fail-user-get"); console.log(err); callback(400, [], response);};
+	var f = function(dataset, err) {
+		if(err == null) {
+			callback(200, dataset, response);
+		}		
+		else callback(400, [], response);
+	};
+	
+	var params1 = [];
+	params1.push({name: "token" , type: TYPES.VarChar, value: context.token});
+	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GetUserByToken", params1, f, failed1)});
+	
+	p1.then(f).catch(failed1);
+}

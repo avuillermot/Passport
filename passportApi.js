@@ -47,6 +47,16 @@ app.put('/refresh/token', function(request, response){
 	sPassport.refreshToken(context, httpConfig.callback, response);
 });
 
+app.get('/:token/:module', function(request, response){
+	console.log(request.params.token);
+	var f = function(code, info, response) {
+		if (code == 400) httpConfig.callback(400,[],response);
+		else sUsers.get(request.params, httpConfig.callback, response);
+	};
+
+	sPassport.checkToken(request.params, f, response);
+});
+
 //********************************
 // run http server
 //********************************	
