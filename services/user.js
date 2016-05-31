@@ -31,7 +31,8 @@ exports.authenticate = function(context, callback, response) {
 		
 	var params1 = [];
 	params1.push({name: "login" , type: TYPES.VarChar, value: context.login});
-	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GetUserByLogin", params1, p1CheckPassword, failed1)});
+	params1.push({name: "password" , type: TYPES.VarChar, value: context.password});
+	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("Authenticate", params1, p1CheckPassword, failed1)});
 	
 	p1.then(p1CheckPassword).then(p2CreateAccess).catch(failed1);
 };
