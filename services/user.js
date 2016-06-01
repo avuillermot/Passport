@@ -48,7 +48,6 @@ exports.create = function(context, callback, response) {
 		else callback(400, [], response);
 	};
 	
-	console.log("create user");
 	var params1 = [];
 	params1.push({name: "lastName" , type: TYPES.VarChar, value: context.lastName});
 	params1.push({name: "firstName" , type: TYPES.VarChar, value: context.firstName});
@@ -60,6 +59,25 @@ exports.create = function(context, callback, response) {
 	params1.push({name: "phoneCountryCode" , type: TYPES.VarChar, value: context.phoneCountryCode});
 	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
+	
+	p1.then(f).catch(failed1);
+};
+
+exports.update = function(context, callback, response) {
+	var failed1 = function(dataset, err) { console.log("fail-users-update"); console.log(err); callback(400, [], response);};
+	var f = function(dataset, err) {
+		if(err == null) callback(200, context, response);
+		else callback(400, [], response);
+	};
+	
+	var params1 = [];
+	params1.push({name: "id" , type: TYPES.VarChar, value: context.id});
+	params1.push({name: "lastName" , type: TYPES.VarChar, value: context.lastName});
+	params1.push({name: "firstName" , type: TYPES.VarChar, value: context.firstName});
+	params1.push({name: "phone" , type: TYPES.VarChar, value: context.phone});
+	params1.push({name: "phoneCountryCode" , type: TYPES.VarChar, value: context.phoneCountryCode});
+	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
+	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("UpdateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
 };

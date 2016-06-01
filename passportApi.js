@@ -18,8 +18,19 @@ app.post('/',function(req, res) {
 	sUsers.create(context, httpConfig.callback, res);
 });
 
+app.put('/',function(req, res) {
+	var context = req.body;
+	context.module = "PROFIL_CUSTOMER";
+	var f = function(code, info, res) {
+		if (code == 200) sUsers.update(context, httpConfig.callback, res);
+		else httpConfig.callback(400,{},res);
+	};
+
+	sPassport.checkToken(context, f, res);
+});
+
 app.put('/authenticate', function(req, res){
-	console.log(req.body.login);
+	console.log("authenticate:" + req.body.login);
 	if (req.body == null || req.body.login === undefined || req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
 	else {
 		var context = {
