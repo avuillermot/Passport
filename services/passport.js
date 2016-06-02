@@ -1,7 +1,17 @@
+/*
+@global test ggg
+*/
 var Promise = require('promise')
 var pool = require("../config/connexion");
 var TYPES = require('tedious').TYPES;
 
+/**
+ * Service de gestions des utilisateurs
+ * @module services/passport
+ * @function checkToken
+ * @param {LACE_COLORS} color - The shoelace color.
+ * @param {LACE_TYPES} type - The type of shoelace.
+ */
 exports.checkToken = function(context, callback, response) {
 	console.log("ask checktoken");
 	var that = this;
@@ -27,7 +37,13 @@ exports.checkToken = function(context, callback, response) {
 	
 	p1.then(pCheck).catch(failed1);
 };
-
+/**
+ * Service de gestions des utilisateurs
+ * @module services/passport
+ * @function refreshToken
+ * @param {LACE_COLORS} color - The shoelace color.
+ * @param {LACE_TYPES} type - The type of shoelace.
+ */
 exports.refreshToken = function(context, callback, response) {
 	var that = this;
 	var user = [];

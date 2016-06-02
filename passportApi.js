@@ -31,6 +31,7 @@ app.put('/',function(req, res) {
 
 app.put('/authenticate', function(req, res){
 	console.log("authenticate:" + req.body.login);
+	console.log("password:" + req.body.password);
 	if (req.body == null || req.body.login === undefined || req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
 	else {
 		var context = {
@@ -41,8 +42,19 @@ app.put('/authenticate', function(req, res){
 	}
 });
 
+app.put('/:module/password', function(req, res){
+	var context = httpConfig.getAuthorizationContext(req);
+	context.password = req.body.password;
+	context.oldPassword = req.body.oldPassword;
+	var f = function(code, info, res) {
+		console.log(code);
+		if (code == 200) sUsers.changePassword(context, httpConfig.callback, res);
+		else httpConfig.callback(400,{},res);
+	};
+	sPassport.checkToken(context, f, res);
+});
+
 app.put('/check/token', function(request, response){
-	console.log(request.body);
 	var context = {
 		token: request.body.tokenId,
 		module: request.body.module
@@ -51,7 +63,6 @@ app.put('/check/token', function(request, response){
 });
 
 app.put('/refresh/token', function(request, response){
-	console.log(request.body);
 	var context = {
 		accessId: request.body.accessId
 	};
@@ -59,7 +70,6 @@ app.put('/refresh/token', function(request, response){
 });
 
 app.get('/:token/:module', function(request, response){
-	console.log(request.params.token);
 	var f = function(code, info, response) {
 		if (code == 400) httpConfig.callback(400,[],response);
 		else sUsers.get(request.params, httpConfig.callback, response);

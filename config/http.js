@@ -31,6 +31,13 @@ var callback = function(code, info, response) {
   response.end(JSON.stringify(content));
 };
 
+exports.getAuthorizationContext = function(req) {
+  var context = {
+    token: req.headers['authorization'],
+    module: req.params.module
+  };
+  return context;
+};
 exports.callback = callback;
 exports.allowCrossDomain = allowCrossDomain;
 exports.portConfig = 8082;
