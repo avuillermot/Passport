@@ -31,6 +31,13 @@ var callback = function(code, info, response) {
   response.end(JSON.stringify(content));
 };
 
+exports.callbackRedirect = function(response, url) {
+   response.writeHead(302, {
+      'Location': url
+    });
+   response.end();
+};
+
 exports.getAuthorizationContext = function(req) {
   var context = {
     token: req.headers['authorization'],

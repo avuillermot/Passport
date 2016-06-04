@@ -56,7 +56,7 @@ app.put('/:module/password', function(req, res){
 
 app.put('/check/token', function(request, response){
 	var context = {
-		token: request.body.tokenId,
+		token: request.body.token,
 		module: request.body.module
 	};
 	sPassport.checkToken(context, httpConfig.callback, response);
