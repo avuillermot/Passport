@@ -20,7 +20,7 @@ exports.authenticate = function(context, callback, response) {
 			params2.push({name: "applicationId" , type: TYPES.VarChar, value: "48DD366E-C25E-4399-960A-F01D04C70002"});
 			var p2 = new Promise(function(resolve, reject) { pool.callProcedure("CreateAccess", params2, p2CreateAccess, failed1)});
 		}
-		else callback(400, [], response);
+		else callback(400, {}, response);
 	};
 	
 	var p2CreateAccess = function(access) {
@@ -35,6 +35,7 @@ exports.authenticate = function(context, callback, response) {
 	var params1 = [];
 	params1.push({name: "login" , type: TYPES.VarChar, value: context.login});
 	params1.push({name: "password" , type: TYPES.VarChar, value: pwd});
+	params1.push({name: "group" , type: TYPES.VarChar, value: context.group});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("Authenticate", params1, p1CheckPassword, failed1)});
 	
 	p1.then(p1CheckPassword).then(p2CreateAccess).catch(failed1);

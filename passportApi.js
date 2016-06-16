@@ -32,11 +32,15 @@ app.put('/',function(req, res) {
 app.put('/authenticate', function(req, res){
 	console.log("authenticate:" + req.body.login);
 	console.log("password:" + req.body.password);
-	if (req.body == null || req.body.login === undefined || req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
+	console.log("group:" + req.body.group);
+	
+	if (req.body == null || req.body.login === undefined 
+		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
 	else {
 		var context = {
 			login: req.body.login,
-			password: req.body.password
+			password: req.body.password,
+			group: req.body.group
 		};
 		sUsers.authenticate(context, httpConfig.callback, res);
 	}
