@@ -26,7 +26,7 @@ exports.checkToken = function(context, callback, response) {
 		}
 		else {
 			console.log("token invalid : " + context.token);
-			callback(400, [], response);
+			callback(401, [], response);
 		}
 	};
 	
@@ -55,7 +55,7 @@ exports.refreshToken = function(context, callback, response) {
 			callback(200, {tokenId: dataset[0].tokenId}, response);
 			console.log("new tokenid valid : " +  dataset[0].tokenId);
 		}
-		else callback(400, [], response);
+		else callback(403, [], response);
 	};
 	
 	var params1 = [];
