@@ -41,8 +41,6 @@ exports.checkToken = function(context, callback, response) {
  * Service de gestions des utilisateurs
  * @module services/passport
  * @function refreshToken
- * @param {LACE_COLORS} color - The shoelace color.
- * @param {LACE_TYPES} type - The type of shoelace.
  */
 exports.refreshToken = function(context, callback, response) {
 	var that = this;

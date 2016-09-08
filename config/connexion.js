@@ -13,15 +13,15 @@ var initParams = function(request, params) {
 };
 
 var onRow = function(columns) {
-	var dataset = [];
+  var dataset = {};
 	var item = {};
 	columns.forEach(function(column){
 		var name = column.metadata.colName; 
-      	var value = column.value;
-      	item[name] = value;
-     });
-     dataset.push(item);
-	 return dataset;
+    var value = column.value;
+    item[name] = value;
+  });
+  dataset = item;
+	return dataset;
 };
 
 var callRequest = function(sql, params, resolve, reject) {
@@ -31,13 +31,15 @@ var callRequest = function(sql, params, resolve, reject) {
           console.error(err);
   
       var request = new Request(sql, function(err, rowCount) {
-			connection.release();
-			if (err == null)resolve(dataset, null);
-			else reject(dataset, err);
-	  });
-	  initParams(request, params);
+         connection.release();
+			   if (err == null)resolve(dataset, null);
+			   else reject(dataset, err);
+	    });
+	    initParams(request, params);
   
-      request.on('row', function(columns) { dataset = onRow(columns);});
+      request.on('row', function(columns) { 
+        dataset.push(onRow(columns));
+      });
       connection.execSql(request);
   });
   
@@ -50,19 +52,20 @@ var callProcedure = function(sql, params, resolve, reject) {
 	
   var dataset = [];
   mssqlPool.acquire(function (err, connection) {
-      if (err)
-          console.error(err);
+      if (err) console.error(err);
   
       //use the connection as normal
       var request = new Request(sql, function(err, rowCount) {
-			connection.release();
-			if (err == null)resolve(dataset, null);
-			else reject(dataset, err);
-	  });
-	  initParams(request, params);
+			   connection.release();
+			   if (err == null)resolve(dataset, null);
+			   else reject(dataset, err);
+	    });
+	    initParams(request, params);
   
-      request.on('row', function(columns) { dataset = onRow(columns);});
-	  connection.callProcedure(request);
+     request.on('row', function(columns) { 
+        dataset.push(onRow(columns));
+     });
+	   connection.callProcedure(request);
   });
   
   mssqlPool.on('error', function(err) {

@@ -29,10 +29,11 @@ app.put('/',function(req, res) {
 	sPassport.checkToken(context, f, res);
 });
 
-app.put('/authenticate', function(req, res){
+/*app.put('/authenticate', function(req, res){
 	console.log("authenticate:" + req.body.login);
 	console.log("password:" + req.body.password);
-	console.log("group:" + req.body.group);
+	console.log("group1:" + req.body.group1);
+	console.log("group2:" + req.body.group2);
 	
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
@@ -41,6 +42,41 @@ app.put('/authenticate', function(req, res){
 			login: req.body.login,
 			password: req.body.password,
 			group: req.body.group
+		};
+		sUsers.authenticate(context, httpConfig.callback, res);
+	}
+});*/
+
+app.put('/authenticate/customer', function(req, res){
+	console.log("authenticate customer");
+	console.log("login:" + req.body.login);
+	console.log("password:" + req.body.password);
+	
+	if (req.body == null || req.body.login === undefined 
+		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
+	else {
+		var context = {
+			login: req.body.login,
+			password: req.body.password,
+			group1: "CUSTOMER"
+		};
+		sUsers.authenticate(context, httpConfig.callback, res);
+	}
+});
+
+app.put('/authenticate/driver', function(req, res){
+	console.log("authenticate driver");
+	console.log("login:" + req.body.login);
+	console.log("password:" + req.body.password);
+	
+	if (req.body == null || req.body.login === undefined 
+		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
+	else {
+		var context = {
+			login: req.body.login,
+			password: req.body.password,
+			group1: "SCHOOL-ADMIN",
+			group2: ""
 		};
 		sUsers.authenticate(context, httpConfig.callback, res);
 	}
