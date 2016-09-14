@@ -111,7 +111,7 @@ app.put('/refresh/token', function(request, response){
 
 app.get('/:token/:module', function(request, response){
 	var f = function(code, info, response) {
-		if (code == 400) httpConfig.callback(400,[],response);
+		if (code !== 200) httpConfig.callback(code,[],response);
 		else sUsers.get(request.params, httpConfig.callback, response);
 	};
 
