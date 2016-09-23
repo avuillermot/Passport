@@ -18,9 +18,9 @@ app.post('/',function(req, res) {
 	sUsers.create(context, httpConfig.callback, res);
 });
 
-app.put('/',function(req, res) {
+app.put('/:module',function(req, res) {
 	var context = req.body;
-	context.module = "PROFIL_CUSTOMER";
+	context.module = req.params.module;
 	var f = function(code, info, res) {
 		if (code == 200) sUsers.update(context, httpConfig.callback, res);
 		else httpConfig.callback(400,{},res);
@@ -28,24 +28,6 @@ app.put('/',function(req, res) {
 
 	sPassport.checkToken(context, f, res);
 });
-
-/*app.put('/authenticate', function(req, res){
-	console.log("authenticate:" + req.body.login);
-	console.log("password:" + req.body.password);
-	console.log("group1:" + req.body.group1);
-	console.log("group2:" + req.body.group2);
-	
-	if (req.body == null || req.body.login === undefined 
-		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnue"}, res);
-	else {
-		var context = {
-			login: req.body.login,
-			password: req.body.password,
-			group: req.body.group
-		};
-		sUsers.authenticate(context, httpConfig.callback, res);
-	}
-});*/
 
 app.put('/authenticate/customer', function(req, res){
 	console.log("authenticate customer");
