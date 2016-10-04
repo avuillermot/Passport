@@ -29,6 +29,11 @@ app.put('/:module',function(req, res) {
 	sPassport.checkToken(context, f, res);
 });
 
+app.put('/generate/password', function(req, res) {
+	var context = req.body;
+	sUsers.generatePassword(context, httpConfig.callback, res);
+});
+
 app.put('/authenticate/customer', function(req, res){
 	console.log("authenticate customer");
 	console.log("login:" + req.body.login);
@@ -58,7 +63,7 @@ app.put('/authenticate/driver', function(req, res){
 			login: req.body.login,
 			password: req.body.password,
 			group1: "SCHOOL-ADMIN",
-			group2: ""
+			group2: "MONITOR"
 		};
 		sUsers.authenticate(context, httpConfig.callback, res);
 	}

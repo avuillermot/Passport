@@ -122,3 +122,22 @@ exports.changePassword = function(context, callback, response) {
 
 	p1.then(f).catch(failed1);
 }
+
+exports.generatePassword = function(context, callback, response) {
+
+	var failed1 = function(dataset, err) { console.log("fail-user-generatePassword"); console.log(err); callback(400, {}, response);};
+	var f = function(dataset, err) {
+		if(err == null) {
+			callback(200, dataset, response);
+		}		
+		else callback(400, [], response);
+	};
+
+	var params1 = [];
+	console.log(context);
+	params1.push({name: "email" , type: TYPES.VarChar, value: context.email});
+	params1.push({name: "newPassword" , type: TYPES.VarChar, value: crypto.encrypt(context.password)});
+	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GeneratePassword", params1, f, failed1)});
+
+	p1.then(f).catch(failed1);
+}
