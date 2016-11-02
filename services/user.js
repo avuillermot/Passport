@@ -82,6 +82,7 @@ exports.update = function(context, callback, response) {
 	params1.push({name: "phone" , type: TYPES.VarChar, value: context.phone});
 	params1.push({name: "phoneCountryCode" , type: TYPES.VarChar, value: context.phoneCountryCode});
 	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
+	params1.push({name: "deleted" , type: TYPES.VarChar, value: context.deleted});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("UpdateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
