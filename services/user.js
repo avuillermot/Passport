@@ -11,7 +11,10 @@ exports.authenticate = function(context, callback, response) {
 	var failed1 = function(dataset, err) { console.log("fail-users-authenticate"); console.log(err); callback(400, [], response);};
 	
 	var p1CheckPassword = function(dataset, err) {
-		if (dataset === undefined || dataset[0] == undefined) callback(400, [], response);
+		if (dataset === undefined || dataset[0] == undefined) {
+			console.log("user not exists");
+			callback(400, [], response);
+		}
 		else if (dataset[0].password == pwd) {
 			that.user = dataset[0];
 			console.log("user valid : " + that.user.id);
@@ -20,7 +23,11 @@ exports.authenticate = function(context, callback, response) {
 			params2.push({name: "applicationId" , type: TYPES.VarChar, value: "48DD366E-C25E-4399-960A-F01D04C70002"});
 			var p2 = new Promise(function(resolve, reject) { pool.callProcedure("CreateAccess", params2, p2CreateAccess, failed1)});
 		}
-		else callback(400, {}, response);
+		else {
+			that.user = dataset[0];
+			console.log("user invalid password : " + that.user.id);
+			callback(400, {}, response);
+		}
 	};
 	
 	var p2CreateAccess = function(access) {
