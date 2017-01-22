@@ -17,7 +17,7 @@ exports.checkToken = function(context, callback, response) {
 	var that = this;
 	var user = [];
 
-	var failed1 = function(dataset, err) { console.log("fail-1"); console.log(err); callback(400, [], response);};
+	var failed1 = function(dataset, err) { console.log("fail-1"); console.log(err); callback(401, [], response);};
 	
 	var pCheck = function(dataset, err) {
 		if (dataset[0].checked == 1) {
