@@ -19,8 +19,11 @@ app.post('/',function(req, res) {
 });
 
 app.put('/:module',function(req, res) {
-	var context = req.body;
-	context.module = req.params.module;
+	var context = httpConfig.getAuthorizationContext(req)
+	for (var prop in req.body) {
+		context[prop] = req.body[prop];
+	}
+	console.log(context);
 	var f = function(code, info, res) {
 		if (code == 200) sUsers.update(context, httpConfig.callback, res);
 		else httpConfig.callback(400,{},res);
