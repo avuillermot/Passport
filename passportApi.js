@@ -23,6 +23,12 @@ app.put('/:module',function(req, res) {
 	for (var prop in req.body) {
 		context[prop] = req.body[prop];
 	}
+	var address = sUsers.convertGoogleAddress(context.place);
+	context.fullAddress = address.fullAddress;
+	context.address1 = address.address1;
+	context.zip = address.zip;
+	context.city = address.city;
+	context.country = address.country;
 	console.log(context);
 	var f = function(code, info, res) {
 		if (code == 200) sUsers.update(context, httpConfig.callback, res);
@@ -35,6 +41,25 @@ app.put('/:module',function(req, res) {
 app.put('/generate/password', function(req, res) {
 	var context = req.body;
 	sUsers.generatePassword(context, httpConfig.callback, res);
+});
+
+//***************************************************
+// authentification sans notion de group
+//***************************************************
+app.put('/authenticate/mobile', function(req, res){
+	console.log("authenticate mobile");
+	console.log("login:" + req.body.login);
+	console.log("password:" + req.body.password);
+	
+	if (req.body == null || req.body.login === undefined 
+		|| req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
+	else {
+		var context = {
+			login: req.body.login,
+			password: req.body.password
+		};
+		sUsers.authenticateV2(context, httpConfig.callback, res);
+	}
 });
 
 app.put('/authenticate/customer', function(req, res){

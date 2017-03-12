@@ -113,7 +113,13 @@ exports.create = function(context, callback, response) {
 	params1.push({name: "groupeRef" , type: TYPES.VarChar, value: context.groupe});
 	params1.push({name: "phone" , type: TYPES.VarChar, value: context.phone});
 	params1.push({name: "phoneCountryCode" , type: TYPES.VarChar, value: context.phoneCountryCode});
+	params1.push({name: "address1" , type: TYPES.VarChar, value: context.address1});
+	//params1.push({name: "address2" , type: TYPES.VarChar, value: context.address2});
+	params1.push({name: "fullAddress" , type: TYPES.VarChar, value: context.fullAddress});
+	params1.push({name: "zip" , type: TYPES.VarChar, value: context.zip});
 	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
+	params1.push({name: "country" , type: TYPES.VarChar, value: context.country});
+	params1.push({name: "paymentRefUser" , type: TYPES.VarChar, value: context.paymentRefUser});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
@@ -132,7 +138,12 @@ exports.update = function(context, callback, response) {
 	params1.push({name: "firstName" , type: TYPES.VarChar, value: context.firstName});
 	params1.push({name: "phone" , type: TYPES.VarChar, value: context.phone});
 	params1.push({name: "phoneCountryCode" , type: TYPES.VarChar, value: context.phoneCountryCode});
+	params1.push({name: "address1" , type: TYPES.VarChar, value: context.address1});
+	//params1.push({name: "address2" , type: TYPES.VarChar, value: context.address2});
+	params1.push({name: "fullAddress" , type: TYPES.VarChar, value: context.fullAddress});
+	params1.push({name: "zip" , type: TYPES.VarChar, value: context.zip});
 	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
+	params1.push({name: "country" , type: TYPES.VarChar, value: context.country});
 	if (context.deleted != null && context.deleted != undefined) params1.push({name: "deleted" , type: TYPES.VarChar, value: context.deleted});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("UpdateUser", params1, f, failed1)});
 	
@@ -192,4 +203,27 @@ exports.generatePassword = function(context, callback, response) {
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GeneratePassword", params1, f, failed1)});
 
 	p1.then(f).catch(failed1);
-}
+};
+
+exports.convertGoogleAddress = function(googlePlace) {
+	var back = {
+		address1: ""
+	};
+	back.fullAddress =  googlePlace.formatted_address;
+    var streetNumber = "";
+    var address1 = "";
+        for (var i = 0; i < googlePlace.address_components.length; i++) {
+            var current = googlePlace.address_components[i];
+            if (current.types != undefined) {
+            if (current.types[0] == "street_number") streetNumber = current.long_name; 
+            else if (current.types[0] == "country") back.country = current.long_name;
+            else if (current.types[0] == "postal_code") back.zip = current.long_name;
+            else if (current.types[0] == "locality") back.city = current.long_name;
+            else if (current.types[0] == "route") address1 = current.long_name;
+        	}
+        }
+    back.address1 = streetNumber + " " + address1;
+    if (back.address1.replace(" ","") == "" || back.address1 == undefined) back.address1 = back.fullAddress;
+
+    return back;
+};
