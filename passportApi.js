@@ -14,6 +14,13 @@ app.use(bodyParser.json())
 
 app.post('/',function(req, res) {
 	var context = req.body;
+	var address = sUsers.convertGoogleAddress(context.place);
+	context.fullAddress = address.fullAddress;
+	context.address1 = address.address1;
+	context.zip = address.zip;
+	context.city = address.city;
+	context.country = address.country;
+	console.log(context);
 	if (req.body.login == null) context.login = req.body.email;
 	sUsers.create(context, httpConfig.callback, res);
 });
@@ -124,6 +131,7 @@ app.put('/refresh/token', function(request, response){
 	sPassport.refreshToken(context, httpConfig.callback, response);
 });
 
+// oboslete -> remplacé par app.get('/:module');
 app.get('/:token/:module', function(request, response){
 	var f = function(code, info, response) {
 		if (code !== 200) httpConfig.callback(code,[],response);
@@ -131,6 +139,16 @@ app.get('/:token/:module', function(request, response){
 	};
 
 	sPassport.checkToken(request.params, f, response);
+});
+
+app.get('/:module', function(request, response){
+	var context = httpConfig.getAuthorizationContext(request);
+	var f = function(code, info, response) {
+		if (code !== 200) httpConfig.callback(code,[],response);
+		else sUsers.get(context, httpConfig.callback, response);
+	};
+	console.log(context);
+	sPassport.checkToken(context, f, response);
 });
 
 //********************************

@@ -216,7 +216,7 @@ exports.convertGoogleAddress = function(googlePlace) {
             var current = googlePlace.address_components[i];
             if (current.types != undefined) {
             if (current.types[0] == "street_number") streetNumber = current.long_name; 
-            else if (current.types[0] == "country") back.country = current.long_name;
+            else if (current.types[0] == "country") back.country = current.short_name;
             else if (current.types[0] == "postal_code") back.zip = current.long_name;
             else if (current.types[0] == "locality") back.city = current.long_name;
             else if (current.types[0] == "route") address1 = current.long_name;
