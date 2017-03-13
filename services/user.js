@@ -1,4 +1,4 @@
-var Promise = require('promise')
+var Promise = require('promise');
 var pool = require("../config/connexion");
 var TYPES = require('tedious').TYPES;
 var crypto = require('../services/crypto');

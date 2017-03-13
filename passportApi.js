@@ -3,9 +3,11 @@ var url = require("url");
 var httpConfig = require("./config/http");
 var express = require("express");
 var bodyParser = require('body-parser');
+var q = require('q');
 
 var sUsers = require("./services/user");
 var sPassport = require("./services/passport");
+var sPayment = require("./services/paiement");
 
 var app = express();
 app.use(httpConfig.allowCrossDomain);
@@ -20,26 +22,39 @@ app.post('/',function(req, res) {
 	context.zip = address.zip;
 	context.city = address.city;
 	context.country = address.country;
-	console.log(context);
 	if (req.body.login == null) context.login = req.body.email;
 	sUsers.create(context, httpConfig.callback, res);
 });
 
 app.put('/:module',function(req, res) {
-	var context = httpConfig.getAuthorizationContext(req)
+	var context = httpConfig.getAuthorizationContext(req);
 	for (var prop in req.body) {
 		context[prop] = req.body[prop];
 	}
-	var address = sUsers.convertGoogleAddress(context.place);
-	context.fullAddress = address.fullAddress;
-	context.address1 = address.address1;
-	context.zip = address.zip;
-	context.city = address.city;
-	context.country = address.country;
-	console.log(context);
+	if (context.place != null) {
+		var address = sUsers.convertGoogleAddress(context.place);
+		context.fullAddress = address.fullAddress;
+		context.address1 = address.address1;
+		context.zip = address.zip;
+		context.city = address.city;
+		context.country = address.country;
+	};
+
 	var f = function(code, info, res) {
-		if (code == 200) sUsers.update(context, httpConfig.callback, res);
-		else httpConfig.callback(400,{},res);
+		var q1 = q.defer();
+		q1.promise.then(
+			function() {
+				console.log(arguments);
+				if (code == 200) sUsers.update(context, httpConfig.callback, res);
+				else httpConfig.callback(400,{},res);
+			},
+			function() {
+				console.log(arguments);
+				if (code == 200) sUsers.update(context, httpConfig.callback, res);
+				else httpConfig.callback(400,{},res);
+			}
+		);
+		sPayment.updateUser(q1,context);
 	};
 
 	sPassport.checkToken(context, f, res);
