@@ -16,12 +16,22 @@ app.use(bodyParser.json())
 
 app.post('/',function(req, res) {
 	var context = req.body;
-	var address = sUsers.convertGoogleAddress(context.place);
-	context.fullAddress = address.fullAddress;
-	context.address1 = address.address1;
-	context.zip = address.zip;
-	context.city = address.city;
-	context.country = address.country;
+	// pas d'adresse pour les membres d'une auto ecole
+	if (context.place !== undefined) {
+		var address = sUsers.convertGoogleAddress(context.place);
+		context.fullAddress = address.fullAddress;
+		context.address1 = address.address1;
+		context.zip = address.zip;
+		context.city = address.city;
+		context.country = address.country;
+	}
+	else {
+		context.fullAddress = "NO_ADDRESS";
+		context.address1 = "NO_ADDRESS";
+		context.zip = "NO_ADDRESS";
+		context.city = "NO_ADDRESS";
+		context.country = "NO_ADDRESS";
+	}
 	if (req.body.login == null) context.login = req.body.email;
 	sUsers.create(context, httpConfig.callback, res);
 });
