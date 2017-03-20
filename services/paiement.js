@@ -10,8 +10,6 @@ var api = new mangopay({
 
 exports.updateUser = function(q1, context) {
 
-    console.log("update");
-    console.log(context);
     var fnUpdate = function() {
         var data =  {
             "Id": context.paymentRefUser,

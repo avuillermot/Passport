@@ -120,6 +120,7 @@ exports.create = function(context, callback, response) {
 	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
 	params1.push({name: "country" , type: TYPES.VarChar, value: context.country});
 	params1.push({name: "paymentRefUser" , type: TYPES.VarChar, value: context.paymentRefUser});
+	params1.push({name: "walletId" , type: TYPES.VarChar, value: context.walletId});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
