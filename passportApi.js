@@ -1,5 +1,7 @@
 var exec = require("child_process").exec;
 var url = require("url");
+var https = require('https');
+var fs = require('fs');
 var httpConfig = require("./config/http");
 var express = require("express");
 var bodyParser = require('body-parser');
@@ -7,7 +9,6 @@ var q = require('q');
 
 var sUsers = require("./services/user");
 var sPassport = require("./services/passport");
-var sPayment = require("./services/paiement");
 
 var app = express();
 app.use(httpConfig.allowCrossDomain);
@@ -64,7 +65,7 @@ app.put('/:module',function(req, res) {
 				else httpConfig.callback(400,{},res);
 			}
 		);
-		sPayment.updateUser(q1,context);
+		q1.resolve();
 	};
 
 	sPassport.checkToken(context, f, res);
@@ -172,15 +173,18 @@ app.get('/:module', function(request, response){
 		if (code !== 200) httpConfig.callback(code,[],response);
 		else sUsers.get(context, httpConfig.callback, response);
 	};
-	console.log(context);
 	sPassport.checkToken(context, f, response);
 });
 
 //********************************
 // run http server
 //********************************	
-app.listen(httpConfig.portConfig);
+var options = {
+  key: fs.readFileSync('local.key'),
+  cert: fs.readFileSync('local.cer')
+};
+https.createServer(options, app).listen(httpConfig.portConfig);
 
 
 // Console will print the message
-console.log('Server running at http://127.0.0.1:8082/');
+console.log('Server running at https://127.0.0.1:8082/');

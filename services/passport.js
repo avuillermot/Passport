@@ -46,14 +46,14 @@ exports.refreshToken = function(context, callback, response) {
 	var that = this;
 	var user = [];
 
-	var failed1 = function(dataset, err) { console.log("fail-1"); console.log(err); callback(400, [], response);};
+	var failed1 = function(dataset, err) { console.log("fail-1"); console.log(err); callback(401, [], response);};
 	
 	var pCheck = function(dataset, err) {
 		if (dataset[0].tokenId !== undefined) {
 			callback(200, {tokenId: dataset[0].tokenId}, response);
 			console.log("new tokenid valid : " +  dataset[0].tokenId);
 		}
-		else callback(403, [], response);
+		else callback(401, [], response);
 	};
 	
 	var params1 = [];
