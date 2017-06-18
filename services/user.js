@@ -121,6 +121,7 @@ exports.create = function(context, callback, response) {
 	params1.push({name: "country" , type: TYPES.VarChar, value: context.country});
 	params1.push({name: "paymentRefUser" , type: TYPES.VarChar, value: context.paymentRefUser});
 	params1.push({name: "walletId" , type: TYPES.VarChar, value: context.walletId});
+	params1.push({name: "birthDate" , type: TYPES.Date, value: context.birthDate});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
@@ -145,6 +146,7 @@ exports.update = function(context, callback, response) {
 	params1.push({name: "zip" , type: TYPES.VarChar, value: context.zip});
 	params1.push({name: "city" , type: TYPES.VarChar, value: context.city});
 	params1.push({name: "country" , type: TYPES.VarChar, value: context.country});
+	params1.push({name: "birthDate" , type: TYPES.Date, value: context.birthDate});
 	if (context.deleted != null && context.deleted != undefined) params1.push({name: "deleted" , type: TYPES.VarChar, value: context.deleted});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("UpdateUser", params1, f, failed1)});
 	
@@ -178,7 +180,6 @@ exports.changePassword = function(context, callback, response) {
 	};
 
 	var params1 = [];
-	console.log(context);
 	params1.push({name: "token" , type: TYPES.VarChar, value: context.token});
 	params1.push({name: "oldPassword" , type: TYPES.VarChar, value: crypto.encrypt(context.oldPassword)});
 	params1.push({name: "newPassword" , type: TYPES.VarChar, value: crypto.encrypt(context.password)});
@@ -198,7 +199,6 @@ exports.generatePassword = function(context, callback, response) {
 	};
 
 	var params1 = [];
-	console.log(context);
 	params1.push({name: "email" , type: TYPES.VarChar, value: context.email});
 	params1.push({name: "newPassword" , type: TYPES.VarChar, value: crypto.encrypt(context.password)});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GeneratePassword", params1, f, failed1)});

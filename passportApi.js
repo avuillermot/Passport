@@ -1,6 +1,8 @@
+var moment = require('moment');
 var exec = require("child_process").exec;
 var url = require("url");
 var https = require('https');
+//var http = require('http');
 var fs = require('fs');
 var httpConfig = require("./config/http");
 var express = require("express");
@@ -15,8 +17,25 @@ app.use(httpConfig.allowCrossDomain);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
+var isOver18 = function(birthDate) {
+	var limit = new moment();
+	limit.add(-18, 'years');
+
+	var birth = new moment(birthDate);
+	console.log(limit);
+	console.log(birthDate);
+	console.log(limit.diff(birth));
+	if (limit.diff(birth) < 0) return false;
+	else return true;
+};
+
 app.post('/',function(req, res) {
 	var context = req.body;
+	var major = isOver18(context.birthDate);
+	if (major == false) {
+		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
+		return false;
+	}
 	// pas d'adresse pour les membres d'une auto ecole
 	if (context.place !== undefined) {
 		var address = sUsers.convertGoogleAddress(context.place);
@@ -42,6 +61,11 @@ app.put('/:module',function(req, res) {
 	for (var prop in req.body) {
 		context[prop] = req.body[prop];
 	}
+	var major = isOver18(context.birthDate);
+	if (major == false) {
+		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
+		return false;
+	}
 	if (context.place != null) {
 		var address = sUsers.convertGoogleAddress(context.place);
 		context.fullAddress = address.fullAddress;
@@ -55,12 +79,10 @@ app.put('/:module',function(req, res) {
 		var q1 = q.defer();
 		q1.promise.then(
 			function() {
-				console.log(arguments);
 				if (code == 200) sUsers.update(context, httpConfig.callback, res);
 				else httpConfig.callback(400,{},res);
 			},
 			function() {
-				console.log(arguments);
 				if (code == 200) sUsers.update(context, httpConfig.callback, res);
 				else httpConfig.callback(400,{},res);
 			}
@@ -184,7 +206,7 @@ var options = {
   cert: fs.readFileSync('local.cer')
 };
 https.createServer(options, app).listen(httpConfig.portConfig);
-
+//http.createServer(app).listen(httpConfig.portConfig);
 
 // Console will print the message
 console.log('Server running at https://127.0.0.1:8082/');
