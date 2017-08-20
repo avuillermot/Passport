@@ -12,10 +12,12 @@ var q = require('q');
 var sUsers = require("./services/user");
 var sPassport = require("./services/passport");
 
-var app = express();
-app.use(httpConfig.allowCrossDomain);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
+global.app = express();
+global.app.use(httpConfig.allowCrossDomain);
+global.app.use(bodyParser.urlencoded({ extended: false }));
+global.app.use(bodyParser.json())
+
+require("./api/apiMessageBird");
 
 var isOver18 = function(birthDate) {
 	var limit = new moment();
@@ -23,15 +25,15 @@ var isOver18 = function(birthDate) {
 
 	var birth = new moment(birthDate);
 	console.log(limit);
-	console.log(birthDate);
-	console.log(limit.diff(birth));
 	if (limit.diff(birth) < 0) return false;
 	else return true;
 };
 
 app.post('/',function(req, res) {
 	var context = req.body;
-	var major = isOver18(context.birthDate);
+	var major = true;
+	if (context.groupe == 'CUSTOMER') major = isOver18(context.birthDate);
+
 	if (major == false) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
 		return false;
@@ -61,11 +63,7 @@ app.put('/:module',function(req, res) {
 	for (var prop in req.body) {
 		context[prop] = req.body[prop];
 	}
-	var major = isOver18(context.birthDate);
-	if (major == false) {
-		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
-		return false;
-	}
+	
 	if (context.place != null) {
 		var address = sUsers.convertGoogleAddress(context.place);
 		context.fullAddress = address.fullAddress;
@@ -76,6 +74,13 @@ app.put('/:module',function(req, res) {
 	};
 
 	var f = function(code, info, res) {
+		var major = true;
+		if (info.groupRef == 'CUSTOMER') major = isOver18(context.birthDate);
+			if (major == false) {
+			httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
+			return false;
+		}
+
 		var q1 = q.defer();
 		q1.promise.then(
 			function() {
@@ -102,10 +107,6 @@ app.put('/generate/password', function(req, res) {
 // authentification sans notion de group
 //***************************************************
 app.put('/authenticate/mobile', function(req, res){
-	console.log("authenticate mobile");
-	console.log("login:" + req.body.login);
-	console.log("password:" + req.body.password);
-	
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
@@ -118,10 +119,6 @@ app.put('/authenticate/mobile', function(req, res){
 });
 
 app.put('/authenticate/customer', function(req, res){
-	console.log("authenticate customer");
-	console.log("login:" + req.body.login);
-	console.log("password:" + req.body.password);
-	
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
