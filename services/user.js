@@ -80,7 +80,9 @@ exports.authenticateV2 = function(context, callback, response) {
 		console.log("create access/token to user : " + that.user.id);
 		delete that.user.password;
 		that.user.accessId = access[0].accessId;
+		that.user.accessExpiredAt = access[0].accessExpiredAt;
 		that.user.tokenId = access[0].tokenId;
+		that.user.tokenExpiredAt = access[0].tokenExpiredAt;
 				
 		callback(200, that.user, response);		
 	};

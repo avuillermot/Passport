@@ -31,6 +31,17 @@ var callback = function(code, info, response) {
   response.end(JSON.stringify(content));
 };
 
+var callback2 = function(code, info, response) {
+
+  // Paramétrage du header
+  response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Content-Type', 'application/json');
+
+  response.writeHead(code);
+  // On renvoi le résultat
+  response.end(JSON.stringify(info));
+};
+
 exports.callbackRedirect = function(response, url) {
    response.writeHead(302, {
       'Location': url
@@ -46,5 +57,6 @@ exports.getAuthorizationContext = function(req) {
   return context;
 };
 exports.callback = callback;
+exports.callback2 = callback2;
 exports.allowCrossDomain = allowCrossDomain;
 exports.portConfig = 8082;

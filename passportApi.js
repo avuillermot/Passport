@@ -2,7 +2,7 @@ var moment = require('moment');
 var exec = require("child_process").exec;
 var url = require("url");
 var https = require('https');
-//var http = require('http');
+var http = require('http');
 var fs = require('fs');
 var httpConfig = require("./config/http");
 var express = require("express");
@@ -17,6 +17,7 @@ global.app.use(httpConfig.allowCrossDomain);
 global.app.use(bodyParser.urlencoded({ extended: false }));
 global.app.use(bodyParser.json())
 
+require("./api/apiAuthenticate");
 require("./api/apiMessageBird");
 
 var isOver18 = function(birthDate) {
@@ -32,6 +33,7 @@ var isOver18 = function(birthDate) {
 app.post('/',function(req, res) {
 	var context = req.body;
 	var major = true;
+
 	if (context.groupe == 'CUSTOMER') major = isOver18(context.birthDate);
 
 	if (major == false) {
