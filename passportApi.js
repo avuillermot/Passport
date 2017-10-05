@@ -163,31 +163,6 @@ app.put('/:module/password', function(req, res){
 	sPassport.checkToken(context, f, res);
 });
 
-app.put('/check/token', function(request, response){
-	var context = {
-		token: request.body.token,
-		module: request.body.module
-	};
-	sPassport.checkToken(context, httpConfig.callback, response);
-});
-
-app.put('/refresh/token', function(request, response){
-	var context = {
-		accessId: request.body.accessId
-	};
-	sPassport.refreshToken(context, httpConfig.callback, response);
-});
-
-// oboslete -> remplacé par app.get('/:module');
-app.get('/:token/:module', function(request, response){
-	var f = function(code, info, response) {
-		if (code !== 200) httpConfig.callback(code,[],response);
-		else sUsers.get(request.params, httpConfig.callback, response);
-	};
-
-	sPassport.checkToken(request.params, f, response);
-});
-
 app.get('/:module', function(request, response){
 	var context = httpConfig.getAuthorizationContext(request);
 	var f = function(code, info, response) {

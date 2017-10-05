@@ -50,7 +50,7 @@ exports.refreshToken = function(context, callback, response) {
 	
 	var pCheck = function(dataset, err) {
 		if (dataset[0].tokenId !== undefined) {
-			callback(200, {tokenId: dataset[0].tokenId}, response);
+			callback(200, {tokenId: dataset[0].tokenId, tokenExpiredAt: dataset[0].tokenExpiredAt}, response);
 			console.log("new tokenid valid : " +  dataset[0].tokenId);
 		}
 		else callback(401, [], response);
