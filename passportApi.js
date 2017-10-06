@@ -37,7 +37,7 @@ app.post('/',function(req, res) {
 	var major = true;
 
 	if (context.groupe == 'CUSTOMER') major = isOver18(context.birthDate);
-	context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+	if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
 	if (major == false) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
@@ -85,7 +85,7 @@ app.put('/:module',function(req, res) {
 			httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
 			return false;
 		}
-		if (context.birthDate.indexOf("/") > -1) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+		if (context.birthDate != null && context.birthDate.indexOf("/") > -1) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 		var q1 = q.defer();
 		q1.promise.then(
 			function() {
