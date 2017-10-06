@@ -27,9 +27,13 @@ app.put('/refresh', function(req, res){
 });
 
 app.put('/check', function(request, response){
-	var context = {
-		token: request.body.token,
-		module: request.body.module
-	};
-	sPassport.checkToken(context, httpConfig.callback, response);
+	if (request.body.token == null || request.body.token == undefined) 
+		httpConfig.callback(401, {}, response);
+	else {
+		var context = {
+			token: request.body.token,
+			module: request.body.module
+		};
+		sPassport.checkToken(context, httpConfig.callback, response);
+	}
 });
