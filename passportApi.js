@@ -85,16 +85,16 @@ app.put('/:module',function(req, res) {
 			httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
 			return false;
 		}
-		if (context.birthDate != null && context.birthDate.indexOf("/") > -1) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+		if (context.birthDate != null && context.birthDate.indexOf("/") > -1) 
+			context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 		var q1 = q.defer();
 		q1.promise.then(
 			function() {
 				if (code == 200) sUsers.update(context, httpConfig.callback, res);
-				else httpConfig.callback(400,{},res);
+				else httpConfig.callback(400,{message: "Erreur code retour"},res);
 			},
 			function() {
-				if (code == 200) sUsers.update(context, httpConfig.callback, res);
-				else httpConfig.callback(400,{},res);
+				httpConfig.callback(400,{message: "Erreur lors de la mise à jour."},res);
 			}
 		);
 		q1.resolve();
