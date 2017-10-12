@@ -107,6 +107,9 @@ exports.create = function(context, callback, response) {
 	};
 	
 	var params1 = [];
+	if (context.phone != null) {
+		if (context.phone.substring(0,1) == "0") context.phone = context.phone.substring(1);
+	}
 	params1.push({name: "lastName" , type: TYPES.VarChar, value: context.lastName});
 	params1.push({name: "firstName" , type: TYPES.VarChar, value: context.firstName});
 	params1.push({name: "login" , type: TYPES.VarChar, value: context.login});
@@ -137,6 +140,9 @@ exports.update = function(context, callback, response) {
 	};
 	
 	var params1 = [];
+	if (context.phone != null) {
+		if (context.phone.substring(0,1) == "0") context.phone = context.phone.substring(1);
+	}
 	params1.push({name: "id" , type: TYPES.VarChar, value: context.id});
 	params1.push({name: "lastName" , type: TYPES.VarChar, value: context.lastName});
 	params1.push({name: "firstName" , type: TYPES.VarChar, value: context.firstName});
