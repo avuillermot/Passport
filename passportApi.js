@@ -21,13 +21,10 @@ require("./api/apiAuthenticate");
 require("./api/apiMessageBird");
 
 var isOver18 = function(birthDate) {
-	console.log("test la majorité");
-	console.log(birthDate);
 	var limit = new moment();
 	limit.add(-18, 'years');
 
 	var birth = new moment(birthDate, "DD/MM/YYYY");
-	console.log(limit);
 	if (limit.diff(birth) < 0) return false;
 	else return true;
 };
