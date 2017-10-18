@@ -3,7 +3,7 @@ var sUsers = require("../services/user");
 var httpConfig = require("../config/http");
 
 global.app.post('/mobile/verify', function(request, response){
-	
+	console.log("Ask token for verify phone number");
 	if (request.body == null || request.body.indicatif == null ||  request.body.mobile == null) {
 		httpConfig.callback(400,[],response);
 		return;
@@ -18,7 +18,8 @@ global.app.post('/mobile/verify', function(request, response){
 
 	messagebird.verify.create(send, {timeout: 600, template: "Votre code de vérification Carl: %token"}, 
 		function (err, data) {
-			if (err) httpConfig.callback(200,{},response);
+			console.log(err);
+			if (err) httpConfig.callback(400,{},response);
   			else httpConfig.callback(200,data,response);
   		}
 	);
@@ -27,7 +28,7 @@ global.app.post('/mobile/verify', function(request, response){
 global.app.post('/mobile/check', function(request, response){
 	messagebird.verify.verify(request.body.verifyId, request.body.tokenId, 
 		function (err, data) {
-			console.log("Error while check :")
+			console.log("Error while check :");
 			console.log(err);
   			if (err) {
   				httpConfig.callback(400,{message: "Code de confirmation non valide."},response);
