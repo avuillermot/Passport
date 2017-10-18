@@ -1,4 +1,5 @@
-var messagebird = require('messagebird')('SvZ4MavApsJ4d0I1Xe7Kkfd3Q');
+var messagebird = require('messagebird')('O1017bUGN1ng3Iu0tDSRdYd66');
+var sUsers = require("../services/user");
 var httpConfig = require("../config/http");
 
 global.app.post('/mobile/verify', function(request, response){
@@ -15,9 +16,8 @@ global.app.post('/mobile/verify', function(request, response){
 	if (mobile.substring(0,1) === "0") mobile = mobile.substring(1);
 	var send = countryCode + mobile;
 
-	messagebird.verify.create(send, 
+	messagebird.verify.create(send, {timeout: 600, template: "Votre code de vérification Carl: %token"}, 
 		function (err, data) {
-			//console.log(data);
 			if (err) httpConfig.callback(200,{},response);
   			else httpConfig.callback(200,data,response);
   		}
@@ -25,37 +25,22 @@ global.app.post('/mobile/verify', function(request, response){
 });
 
 global.app.post('/mobile/check', function(request, response){
-	console.log(request.body);
 	messagebird.verify.verify(request.body.verifyId, request.body.tokenId, 
 		function (err, data) {
-  			/*if (err) {
+			console.log("Error while check :")
+			console.log(err);
+  			if (err) {
   				httpConfig.callback(400,{message: "Code de confirmation non valide."},response);
-    			console.log(err);
   			}
-  			else*/ httpConfig.callback(200,{},response);
+  			else {
+  				var context = {
+  					idUser: request.body.idUser,
+  					verifyId: request.body.verifyId,
+  					tokenId: request.body.tokenId
+  				};
+  				sUsers.setMobileChecked(context, null, null);
+  				httpConfig.callback(200,{},response);
+  			}
   		}
 	);
 });
-
-global.app.post('/mobile/take/charge', function(request, response){
-	if (request.body == null || request.body.indicatif == null ||  request.body.mobile == null) {
-		httpConfig.callback(400,[],response);
-		return;
-	}
-
-	var params = {
-	  'originator': 'Carl-Move',
-	  'recipients': [
-	    '31612345678'
-	  ],
-	  'body': 'Votre trajet est pris en charge.'
-	};
-
-	messagebird.messages.create(params, function (err, response) {
-	  if (err) httpConfig.callback(200,{},response);
-	  else httpConfig.callback(400,{},response);
-	});
-});
-
-
-

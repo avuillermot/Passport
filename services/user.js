@@ -127,6 +127,8 @@ exports.create = function(context, callback, response) {
 	params1.push({name: "paymentRefUser" , type: TYPES.VarChar, value: context.paymentRefUser});
 	params1.push({name: "walletId" , type: TYPES.VarChar, value: context.walletId});
 	params1.push({name: "birthDate" , type: TYPES.Date, value: context.birthDate});
+	params1.push({name: "tokenCheckPhone" , type: TYPES.VarChar, value: context.tokenCheckPhone});
+	params1.push({name: "phoneChecked" , type: TYPES.Bit, value: context.phoneChecked});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("CreateUser", params1, f, failed1)});
 	
 	p1.then(f).catch(failed1);
@@ -210,6 +212,27 @@ exports.generatePassword = function(context, callback, response) {
 	params1.push({name: "email" , type: TYPES.VarChar, value: context.email});
 	params1.push({name: "newPassword" , type: TYPES.VarChar, value: crypto.encrypt(context.password)});
 	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("GeneratePassword", params1, f, failed1)});
+
+	p1.then(f).catch(failed1);
+};
+
+exports.setMobileChecked = function(context, callback, response) {
+
+	var failed1 = function(dataset, err) { console.log("fail-user-SetMobileChecked"); console.log(err); callback(400, {}, response);};
+	var f = function(dataset, err) {
+		if (callback != null && response != null) {
+			if(err == null) {
+				callback(200, dataset, response);
+			}		
+			else callback(400, [], response);
+		}
+	};
+
+	var params1 = [];
+	params1.push({name: "idUser" , type: TYPES.VarChar, value: context.idUser});
+	params1.push({name: "token" , type: TYPES.VarChar, value: context.tokenId});
+	params1.push({name: "checked" , type: TYPES.Bit, value: true});
+	var p1 = new Promise(function(resolve, reject) { pool.callProcedure("SetMobileChecked", params1, f, failed1)});
 
 	p1.then(f).catch(failed1);
 };

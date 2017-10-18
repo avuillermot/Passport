@@ -34,6 +34,10 @@ app.post('/',function(req, res) {
 	var major = true;
 
 	if (context.groupe == 'CUSTOMER') major = isOver18(context.birthDate);
+	else {
+		context.tokenCheckPhone = null;
+		context.phoneChecked = false;
+	}
 	if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
 	if (major == false) {
