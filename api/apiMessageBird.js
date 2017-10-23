@@ -19,8 +19,9 @@ global.app.post('/mobile/verify', function(request, response){
 	messagebird.verify.create(send, {timeout: 600, template: "Votre code de vérification Carl: %token"}, 
 		function (err, data) {
 			console.log(err);
-			if (err) httpConfig.callback(400,{},response);
-  			else httpConfig.callback(200,data,response);
+			/*if (err) httpConfig.callback(400,{},response);
+  			else httpConfig.callback(200,data,response);*/
+  			httpConfig.callback(200,{id: 'simulation'},response)
   		}
 	);
 });
@@ -30,10 +31,10 @@ global.app.post('/mobile/check', function(request, response){
 		function (err, data) {
 			console.log("Error while check :");
 			console.log(err);
-  			if (err) {
+  			/*if (err) {
   				httpConfig.callback(400,{message: "Code de confirmation non valide."},response);
   			}
-  			else {
+  			else {*/
   				var context = {
   					idUser: request.body.idUser,
   					verifyId: request.body.verifyId,
@@ -41,7 +42,7 @@ global.app.post('/mobile/check', function(request, response){
   				};
   				sUsers.setMobileChecked(context, null, null);
   				httpConfig.callback(200,{},response);
-  			}
+  			//}
   		}
 	);
 });

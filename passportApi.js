@@ -176,6 +176,10 @@ app.get('/:module', function(request, response){
 	sPassport.checkToken(context, f, response);
 });
 
+app.get('/test', function(request, response){
+	httpConfig.callback(code,{message: "API in progress."},response);
+});
+
 //********************************
 // run http server
 //********************************	
@@ -183,8 +187,8 @@ var options = {
   key: fs.readFileSync('local.key'),
   cert: fs.readFileSync('local.cer')
 };
-https.createServer(options, app).listen(httpConfig.portConfig);
-//http.createServer(app).listen(httpConfig.portConfig);
+//https.createServer(options, app).listen(httpConfig.portConfig);
+http.createServer(app).listen(httpConfig.portConfig);
 
 // Console will print the message
 console.log('Server running at https://127.0.0.1:8082/');
