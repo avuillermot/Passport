@@ -183,11 +183,11 @@ app.get('/test', function(request, response){
 //********************************
 // run http server
 //********************************	
-var options = {
+/*var options = {
   key: fs.readFileSync('local.key'),
   cert: fs.readFileSync('local.cer')
 };
-//https.createServer(options, app).listen(httpConfig.portConfig);
+https.createServer(options, app).listen(httpConfig.portConfig);*/
 http.createServer(app).listen(httpConfig.portConfig);
 
 // Console will print the message
