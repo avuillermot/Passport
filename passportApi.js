@@ -19,10 +19,10 @@ require("./api/apiMessageBird");*/
 var server = http.createServer(function(request, response) {
 
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
+    response.end("Hello World5555!");
 
 });
 
-//var port = process.env.PORT || 80;
-server.listen(80);
+var port = process.env.PORT || 1337;
+server.listen(port);
 
