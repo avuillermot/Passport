@@ -192,7 +192,7 @@ app.get('/test', function(request, response){
   cert: fs.readFileSync('local.cer')
 };
 https.createServer(options, app).listen(httpConfig.portConfig);*/
-http.createServer(app).listen(process.env.PORT || 81);
+http.createServer(app).listen(process.env.PORT || 80);
 
 // Console will print the message
 //console.log('Server running at https://127.0.0.1:8082/');
