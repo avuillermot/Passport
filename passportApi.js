@@ -12,10 +12,10 @@ var q = require('q');
 var sUsers = require("./services/user");
 var sPassport = require("./services/passport");
 
-global.app = express();
+/*global.app = express();
 global.app.use(httpConfig.allowCrossDomain);
 global.app.use(bodyParser.urlencoded({ extended: false }));
-global.app.use(bodyParser.json())
+global.app.use(bodyParser.json())*/
 
 /*var app = http.createServer(function(request, response) {
 
@@ -26,6 +26,16 @@ global.app.use(bodyParser.json())
 
 require("./api/apiAuthenticate");
 require("./api/apiMessageBird");
+
+var server = http.createServer(function(request, response) {
+
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.end("Hello World!");
+
+});
+
+var port = process.env.PORT || 80;
+server.listen(port);
 
 /*var isOver18 = function(birthDate) {
 	var limit = new moment();
@@ -193,16 +203,6 @@ app.get('/:module', function(request, response){
 };
 https.createServer(options, app).listen(httpConfig.portConfig);*/
 //http.createServer(app).listen(process.env.PORT || 80);
-
-var server = http.createServer(function(request, response) {
-
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
-
-});
-
-var port = process.env.PORT || 80;
-server.listen(port);
 
 // Console will print the message
 //console.log('Server running at https://127.0.0.1:8082/');
