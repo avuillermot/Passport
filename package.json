@@ -2,7 +2,6 @@
   "name": "passport-carl-move",
   "version": "1.0.0",
   "description": "",
-  "main": "passportApi.js",
   "dependencies": {
     "http": "^0.0.0",
     "body-parser": "^1.15.0",
@@ -17,19 +16,10 @@
     "oauth2-server": "^2.4.1",
     "tedious": "^1.14.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node passportApi.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/avuillermot/Passport.git"
+    "start": "node passportApi.js"
   },
   "author": "AVT",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/avuillermot/Passport/issues"
-  },
   "homepage": "https://github.com/avuillermot/Passport#readme"
 }
