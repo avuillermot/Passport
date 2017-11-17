@@ -181,7 +181,7 @@ app.get('/:module', function(request, response){
 });*/
 
 app.get('/test', function(request, response){
-	httpConfig.callback(code,{message: "API in progress."},response);
+	httpConfig.callback(200,{message: "API in progress."},response);
 });
 
 //********************************
@@ -192,7 +192,7 @@ app.get('/test', function(request, response){
   cert: fs.readFileSync('local.cer')
 };
 https.createServer(options, app).listen(httpConfig.portConfig);*/
-http.createServer(app).listen(process.env.PORT || 80);
+http.createServer(app).listen(process.env.PORT || 81);
 
 // Console will print the message
-console.log('Server running at https://127.0.0.1:8082/');
+//console.log('Server running at https://127.0.0.1:8082/');
