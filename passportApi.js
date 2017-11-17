@@ -20,7 +20,7 @@ global.app.use(bodyParser.json())
 require("./api/apiAuthenticate");
 require("./api/apiMessageBird");
 
-var isOver18 = function(birthDate) {
+/*var isOver18 = function(birthDate) {
 	var limit = new moment();
 	limit.add(-18, 'years');
 
@@ -109,9 +109,6 @@ app.put('/generate/password', function(req, res) {
 	sUsers.generatePassword(context, httpConfig.callback, res);
 });
 
-//***************************************************
-// authentification sans notion de group
-//***************************************************
 app.put('/authenticate/mobile', function(req, res){
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
@@ -174,7 +171,7 @@ app.get('/:module', function(request, response){
 		else sUsers.get(context, httpConfig.callback, response);
 	};
 	sPassport.checkToken(context, f, response);
-});
+});*/
 
 app.get('/test', function(request, response){
 	httpConfig.callback(code,{message: "API in progress."},response);
@@ -188,7 +185,7 @@ app.get('/test', function(request, response){
   cert: fs.readFileSync('local.cer')
 };
 https.createServer(options, app).listen(httpConfig.portConfig);*/
-http.createServer(app).listen(httpConfig.portConfig);
+http.createServer(app).listen(process.env.PORT);
 
 // Console will print the message
 console.log('Server running at https://127.0.0.1:8082/');
