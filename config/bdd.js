@@ -9,7 +9,7 @@ var configuration = {
 		"driver": "tedious",
 		"userName": "sa",
 		"password": "Kerenann06041979",
-		"server": "DEV-takedoc.cloudapp.net", // You can use 'localhost\\instance' to connect to named instance 
+		"server": "dev-takedoc.cloudapp.net", // You can use 'localhost\\instance' to connect to named instance 
 
 		"options": {
 			//"instanceName": "sqlexpress",
