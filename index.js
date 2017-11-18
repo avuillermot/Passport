@@ -14,17 +14,13 @@ var q = require('q');
 var sUsers = require(path.resolve(__dirname,"services/user"));
 var sPassport = require(path.resolve(__dirname,"services/passport"));
 
-
-/*require(path.resolve(__dirname,"api/apiAuthenticate"));
-require(path.resolve(__dirname,"api/apiMessageBird"));*/
+require(path.resolve(__dirname,"api/apiAuthenticate"));
+require(path.resolve(__dirname,"api/apiMessageBird"));
 
 global.app = express();
 global.app.use(httpConfig.allowCrossDomain);
 global.app.use(bodyParser.urlencoded({ extended: false }));
 global.app.use(bodyParser.json())
-
-require("./api/apiAuthenticate");
-require("./api/apiMessageBird");
 
 var isOver18 = function(birthDate) {
 	var limit = new moment();
