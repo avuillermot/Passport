@@ -11,16 +11,16 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var q = require('q');
 
+global.app = express();
+global.app.use(httpConfig.allowCrossDomain);
+global.app.use(bodyParser.urlencoded({ extended: false }));
+global.app.use(bodyParser.json())
+
 var sUsers = require(path.resolve(__dirname,"services/user"));
 var sPassport = require(path.resolve(__dirname,"services/passport"));
 
 require(path.resolve(__dirname,"api/apiAuthenticate"));
 require(path.resolve(__dirname,"api/apiMessageBird"));
-
-global.app = express();
-global.app.use(httpConfig.allowCrossDomain);
-global.app.use(bodyParser.urlencoded({ extended: false }));
-global.app.use(bodyParser.json())
 
 var isOver18 = function(birthDate) {
 	var limit = new moment();
