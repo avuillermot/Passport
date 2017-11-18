@@ -1,5 +1,4 @@
 const path = require('path');
-//console.log(path.resolve(__dirname,"./config/http"));
 
 var moment = require('moment');
 //var exec = require("child_process").exec;
@@ -12,17 +11,17 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var q = require('q');
 
-//var sUsers = require("./services/user");
-//var sPassport = require("./services/passport");
+var sUsers = require(path.resolve(__dirname,"./services/user"));
+//var sPassport = require(path.resolve(__dirname,"./services/passport"));
 
 
-//require("./api/apiAuthenticate");
-//require("./api/apiMessageBird");
+require(path.resolve(__dirname,"./api/apiAuthenticate"));
+require(path.resolve(__dirname,"./api/apiMessageBird"));
 
 var server = http.createServer(function(request, response) {
 
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World5555!");
+    response.end("Hello World5555222!");
 
 });
 
