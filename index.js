@@ -1,10 +1,13 @@
+const path = require('path');
+//console.log(path.resolve(__dirname,"./config/http"));
+
 var moment = require('moment');
 //var exec = require("child_process").exec;
 var url = require("url");
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
-var httpConfig = require("config/http");
+var httpConfig = require(path.resolve(__dirname,"config/http"));
 var express = require("express");
 var bodyParser = require('body-parser');
 var q = require('q');
