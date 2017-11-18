@@ -188,5 +188,5 @@ app.get('/test', function(request, response){
 });
 
 var port = process.env.PORT || 1337;
-server.listen(port);
+app.listen(port);
 
