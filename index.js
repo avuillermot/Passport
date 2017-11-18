@@ -11,12 +11,12 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var q = require('q');
 
-var sUsers = require(path.resolve(__dirname,"./services/user"));
-//var sPassport = require(path.resolve(__dirname,"./services/passport"));
+var sUsers = require(path.resolve(__dirname,"services/user"));
+var sPassport = require(path.resolve(__dirname,"services/passport"));
 
 
-require(path.resolve(__dirname,"./api/apiAuthenticate"));
-require(path.resolve(__dirname,"./api/apiMessageBird"));
+/*require(path.resolve(__dirname,"api/apiAuthenticate"));
+require(path.resolve(__dirname,"api/apiMessageBird"));*/
 
 var server = http.createServer(function(request, response) {
 
