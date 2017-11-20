@@ -157,26 +157,32 @@ app.put('/authenticate/driver', function(req, res){
 	}
 });
 
-/*app.put('/:module/password', function(req, res){
-	var context = httpConfig.getAuthorizationContext(req);
-	context.password = req.body.password;
-	context.oldPassword = req.body.oldPassword;
-	var f = function(code, info, res) {
-		console.log(code);
-		if (code == 200) sUsers.changePassword(context, httpConfig.callback, res);
-		else httpConfig.callback(400,{},res);
-	};
-	sPassport.checkToken(context, f, res);
+app.put('/:module/password', function(req, res){
+	if (req.body == null && req.body != undefined)  {
+		var context = httpConfig.getAuthorizationContext(req);
+		context.password = req.body.password;
+		context.oldPassword = req.body.oldPassword;
+		var f = function(code, info, res) {
+			console.log(code);
+			if (code == 200) sUsers.changePassword(context, httpConfig.callback, res);
+			else httpConfig.callback(400,{},res);
+		};
+		sPassport.checkToken(context, f, res);
+	}
+	else httpConfig.callback(400,{},res);
 });
 
 app.get('/:module', function(request, response){
-	var context = httpConfig.getAuthorizationContext(request);
-	var f = function(code, info, response) {
-		if (code !== 200) httpConfig.callback(code,[],response);
-		else sUsers.get(context, httpConfig.callback, response);
-	};
-	sPassport.checkToken(context, f, response);
-});*/
+	if (req.body == null && req.body != undefined)  {
+		var context = httpConfig.getAuthorizationContext(request);
+		var f = function(code, info, response) {
+			if (code !== 200) httpConfig.callback(code,[],response);
+			else sUsers.get(context, httpConfig.callback, response);
+		};
+		sPassport.checkToken(context, f, response);
+	}
+	else httpConfig.callback(400,{},res);
+});
 
 app.get('/test', function(request, response){
 	console.log("test end");
