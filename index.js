@@ -39,13 +39,12 @@ app.post('/',function(req, res) {
 		context.tokenCheckPhone = null;
 		context.phoneChecked = false;
 	}
-	//if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+	if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
 	if (major == false) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
 		return false;
 	}
-	//httpConfig.callback(200,"Vommus devez être majeur pour accéder aux services.",res);
 	// pas d'adresse pour les membres d'une auto ecole
 	if (context.place !== undefined) {
 		var address = sUsers.convertGoogleAddress(context.place);
