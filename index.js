@@ -30,7 +30,7 @@ var isOver18 = function(birthDate) {
 	else return true;
 };
 
-/*app.post('/',function(req, res) {
+app.post('/',function(req, res) {
 	var context = req.body;
 	var major = true;
 
@@ -45,8 +45,9 @@ var isOver18 = function(birthDate) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
 		return false;
 	}
+	httpConfig.callback(200,"Vommus devez être majeur pour accéder aux services.",res);
 	// pas d'adresse pour les membres d'une auto ecole
-	if (context.place !== undefined) {
+	/*if (context.place !== undefined) {
 		var address = sUsers.convertGoogleAddress(context.place);
 		context.fullAddress = address.fullAddress;
 		context.address1 = address.address1;
@@ -62,8 +63,8 @@ var isOver18 = function(birthDate) {
 		context.country = "NO_ADDRESS";
 	}
 	if (req.body.login == null) context.login = req.body.email;
-	sUsers.create(context, httpConfig.callback, res);
-});*/
+	sUsers.create(context, httpConfig.callback, res);*/
+});
 
 app.put('/:module',function(req, res) {
 	var context = httpConfig.getAuthorizationContext(req);
@@ -109,7 +110,7 @@ app.put('/generate/password', function(req, res) {
 	var context = req.body;
 	sUsers.generatePassword(context, httpConfig.callback, res);
 });
-
+/*
 //***************************************************
 // authentification sans notion de group
 //***************************************************
@@ -175,7 +176,7 @@ app.get('/:module', function(request, response){
 		else sUsers.get(context, httpConfig.callback, response);
 	};
 	sPassport.checkToken(context, f, response);
-});
+});*/
 
 app.get('/test', function(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
