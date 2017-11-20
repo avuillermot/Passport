@@ -10,12 +10,12 @@ var configuration = {
 		"userName": "sa",
 		"password": "Kerenann06041979",
 		"server": "dev-takedoc.cloudapp.net", // You can use 'localhost\\instance' to connect to named instance 
-
+		"database": "PASSPORT",
 		"options": {
-			"instanceName": "SQLEXPRESS",
+			"instanceName": "SQLEXPRESS"
 			//"port": 49363,
-			"database": "PASSPORT",
-			"encrypt": false
+			//"database": "PASSPORT"
+			//"encrypt": false
 		}
 	}
 }
