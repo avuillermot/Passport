@@ -191,7 +191,5 @@ app.get('/test', function(request, response){
 });
 
 var port = process.env.PORT || 1337;
-var options = {
-};
-http.createServer(app).listen(httpConfig.portConfig);
+app.listen(port);
 console.log("end");
