@@ -45,9 +45,9 @@ app.post('/',function(req, res) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
 		return false;
 	}
-	httpConfig.callback(200,"Vommus devez être majeur pour accéder aux services.",res);
+	//httpConfig.callback(200,"Vommus devez être majeur pour accéder aux services.",res);
 	// pas d'adresse pour les membres d'une auto ecole
-	/*if (context.place !== undefined) {
+	if (context.place !== undefined) {
 		var address = sUsers.convertGoogleAddress(context.place);
 		context.fullAddress = address.fullAddress;
 		context.address1 = address.address1;
@@ -63,7 +63,7 @@ app.post('/',function(req, res) {
 		context.country = "NO_ADDRESS";
 	}
 	if (req.body.login == null) context.login = req.body.email;
-	sUsers.create(context, httpConfig.callback, res);*/
+	sUsers.create(context, httpConfig.callback, res);
 });
 
 app.put('/:module',function(req, res) {
