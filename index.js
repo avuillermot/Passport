@@ -144,7 +144,7 @@ app.put('/authenticate/driver', function(req, res){
 	console.log("login:" + req.body.login);
 	console.log("password:" + req.body.password);
 	
-	if (req.body == null || req.body.login === undefined 
+	if ((req.body == null && req.body != undefined) || req.body.login === undefined 
 		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
 		var context = {
@@ -181,7 +181,7 @@ app.get('/:module', function(request, response){
 app.get('/test', function(request, response){
 	console.log("test end");
 	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.end("Hello World5555222333333333333!");
+	response.end("Hello World!");
 });
 
 var port = process.env.PORT || 1337;
