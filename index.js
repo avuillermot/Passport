@@ -105,15 +105,15 @@ app.put('/:module',function(req, res) {
 	sPassport.checkToken(context, f, res);
 });
 
-app.put('/generate/password', function(req, res) {
+/*app.put('/generate/password', function(req, res) {
 	var context = req.body;
 	sUsers.generatePassword(context, httpConfig.callback, res);
-});
+});*/
 
 //***************************************************
 // authentification sans notion de group
 //***************************************************
-app.put('/authenticate/mobile', function(req, res){
+/*app.put('/authenticate/mobile', function(req, res){
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
@@ -123,9 +123,9 @@ app.put('/authenticate/mobile', function(req, res){
 		};
 		sUsers.authenticateV2(context, httpConfig.callback, res);
 	}
-});
+});*/
 
-app.put('/authenticate/customer', function(req, res){
+/*app.put('/authenticate/customer', function(req, res){
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
@@ -136,9 +136,9 @@ app.put('/authenticate/customer', function(req, res){
 		};
 		sUsers.authenticate(context, httpConfig.callback, res);
 	}
-});
+});*/
 
-app.put('/authenticate/driver', function(req, res){
+/*app.put('/authenticate/driver', function(req, res){
 	console.log("authenticate driver");
 	console.log("login:" + req.body.login);
 	console.log("password:" + req.body.password);
@@ -154,9 +154,9 @@ app.put('/authenticate/driver', function(req, res){
 		};
 		sUsers.authenticate(context, httpConfig.callback, res);
 	}
-});
+});*/
 
-app.put('/:module/password', function(req, res){
+/*app.put('/:module/password', function(req, res){
 	var context = httpConfig.getAuthorizationContext(req);
 	context.password = req.body.password;
 	context.oldPassword = req.body.oldPassword;
@@ -166,16 +166,16 @@ app.put('/:module/password', function(req, res){
 		else httpConfig.callback(400,{},res);
 	};
 	sPassport.checkToken(context, f, res);
-});
+});*/
 
-app.get('/:module', function(request, response){
+/*app.get('/:module', function(request, response){
 	var context = httpConfig.getAuthorizationContext(request);
 	var f = function(code, info, response) {
 		if (code !== 200) httpConfig.callback(code,[],response);
 		else sUsers.get(context, httpConfig.callback, response);
 	};
 	sPassport.checkToken(context, f, response);
-});
+});*/
 
 app.get('/test', function(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
