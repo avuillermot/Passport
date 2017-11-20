@@ -181,7 +181,7 @@ app.get('/:module', function(request, response){
 		};
 		sPassport.checkToken(context, f, response);
 	}
-	else httpConfig.callback(400,{},res);
+	else httpConfig.callback(400,{},response);
 });
 
 app.get('/test', function(request, response){
