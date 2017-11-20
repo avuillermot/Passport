@@ -65,7 +65,7 @@ var isOver18 = function(birthDate) {
 	sUsers.create(context, httpConfig.callback, res);
 });*/
 
-/*app.put('/:module',function(req, res) {
+app.put('/:module',function(req, res) {
 	var context = httpConfig.getAuthorizationContext(req);
 	for (var prop in req.body) {
 		context[prop] = req.body[prop];
@@ -109,7 +109,7 @@ app.put('/generate/password', function(req, res) {
 	var context = req.body;
 	sUsers.generatePassword(context, httpConfig.callback, res);
 });
-
+/*
 //***************************************************
 // authentification sans notion de group
 //***************************************************
