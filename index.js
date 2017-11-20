@@ -171,7 +171,7 @@ app.put('/:module/password', function(req, res){
 	}
 	else httpConfig.callback(400,{},res);
 });
-
+/*
 app.get('/:module', function(request, response){
 	if (request.body == null && req.body != undefined)  {
 		var context = httpConfig.getAuthorizationContext(request);
@@ -189,7 +189,7 @@ app.get('/test', function(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	response.end("Hello World!");
 });
-
+*/
 var port = process.env.PORT || 1337;
 var options = {
 };
