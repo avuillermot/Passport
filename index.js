@@ -15,14 +15,14 @@ global.app = express();
 global.app.use(httpConfig.allowCrossDomain);
 global.app.use(bodyParser.urlencoded({ extended: false }));
 global.app.use(bodyParser.json())
-/*
+
 var sUsers = require(path.resolve(__dirname,"services/user"));
 var sPassport = require(path.resolve(__dirname,"services/passport"));
-*/
+
 
 require(path.resolve(__dirname,"api/apiAuthenticate"));
 require(path.resolve(__dirname,"api/apiMessageBird"));
-/*
+
 var isOver18 = function(birthDate) {
 	var limit = new moment();
 	limit.add(-18, 'years');
@@ -177,7 +177,7 @@ app.get('/:module', function(request, response){
 		else sUsers.get(context, httpConfig.callback, response);
 	};
 	sPassport.checkToken(context, f, response);
-});*/
+});
 
 app.get('/test', function(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
