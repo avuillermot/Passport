@@ -39,7 +39,7 @@ app.post('/',function(req, res) {
 		context.tokenCheckPhone = null;
 		context.phoneChecked = false;
 	}
-	if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+	//if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
 	if (major == false) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
