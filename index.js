@@ -1,7 +1,5 @@
 const path = require('path');
-
 var moment = require('moment');
-//var exec = require("child_process").exec;
 var url = require("url");
 var https = require('https');
 var http = require('http');
@@ -23,7 +21,7 @@ var sPassport = require(path.resolve(__dirname,"services/passport"));
 require(path.resolve(__dirname,"api/apiAuthenticate"));
 require(path.resolve(__dirname,"api/apiMessageBird"));
 
-/*var isOver18 = function(birthDate) {
+var isOver18 = function(birthDate) {
 	var limit = new moment();
 	limit.add(-18, 'years');
 
@@ -67,7 +65,7 @@ app.post('/',function(req, res) {
 	sUsers.create(context, httpConfig.callback, res);
 });
 
-app.put('/:module',function(req, res) {
+/*app.put('/:module',function(req, res) {
 	var context = httpConfig.getAuthorizationContext(req);
 	for (var prop in req.body) {
 		context[prop] = req.body[prop];
