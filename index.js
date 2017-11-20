@@ -126,7 +126,7 @@ app.put('/authenticate/mobile', function(req, res){
 	}
 });
 
-/*app.put('/authenticate/customer', function(req, res){
+app.put('/authenticate/customer', function(req, res){
 	if (req.body == null || req.body.login === undefined 
 		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
@@ -137,7 +137,7 @@ app.put('/authenticate/mobile', function(req, res){
 		};
 		sUsers.authenticate(context, httpConfig.callback, res);
 	}
-});*/
+});
 
 /*app.put('/authenticate/driver', function(req, res){
 	console.log("authenticate driver");
