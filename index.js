@@ -114,8 +114,8 @@ app.put('/generate/password', function(req, res) {
 //***************************************************
 // authentification sans notion de group
 //***************************************************
-/*app.put('/authenticate/mobile', function(req, res){
-	if (req.body == null || req.body.login === undefined 
+app.put('/authenticate/mobile', function(req, res){
+	if ((req.body == null && req.body != undefined) || req.body.login === undefined 
 		|| req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
 		var context = {
@@ -124,7 +124,7 @@ app.put('/generate/password', function(req, res) {
 		};
 		sUsers.authenticateV2(context, httpConfig.callback, res);
 	}
-});*/
+});
 
 /*app.put('/authenticate/customer', function(req, res){
 	if (req.body == null || req.body.login === undefined 
@@ -179,6 +179,7 @@ app.put('/generate/password', function(req, res) {
 });*/
 
 app.get('/test', function(request, response){
+	console.log("test end");
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	response.end("Hello World5555222333333333333!");
 });
