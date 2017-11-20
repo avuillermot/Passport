@@ -109,7 +109,7 @@ app.put('/generate/password', function(req, res) {
 	var context = req.body;
 	sUsers.generatePassword(context, httpConfig.callback, res);
 });
-/*
+
 //***************************************************
 // authentification sans notion de group
 //***************************************************
@@ -175,7 +175,7 @@ app.get('/:module', function(request, response){
 		else sUsers.get(context, httpConfig.callback, response);
 	};
 	sPassport.checkToken(context, f, response);
-});*/
+});
 
 app.get('/test', function(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
