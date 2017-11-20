@@ -172,8 +172,8 @@ app.put('/:module/password', function(req, res){
 	else httpConfig.callback(400,{},res);
 });
 
-/*app.get('/:module', function(request, response){
-	if (req.body == null && req.body != undefined)  {
+app.get('/:module', function(request, response){
+	if (request.body == null && req.body != undefined)  {
 		var context = httpConfig.getAuthorizationContext(request);
 		var f = function(code, info, response) {
 			if (code !== 200) httpConfig.callback(code,[],response);
@@ -182,7 +182,7 @@ app.put('/:module/password', function(req, res){
 		sPassport.checkToken(context, f, response);
 	}
 	else httpConfig.callback(400,{},res);
-});*/
+});
 
 app.get('/test', function(request, response){
 	console.log("test end");
