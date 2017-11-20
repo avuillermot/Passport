@@ -30,7 +30,7 @@ var isOver18 = function(birthDate) {
 	else return true;
 };
 
-app.post('/',function(req, res) {
+/*app.post('/',function(req, res) {
 	var context = req.body;
 	var major = true;
 
@@ -63,7 +63,7 @@ app.post('/',function(req, res) {
 	}
 	if (req.body.login == null) context.login = req.body.email;
 	sUsers.create(context, httpConfig.callback, res);
-});
+});*/
 
 /*app.put('/:module',function(req, res) {
 	var context = httpConfig.getAuthorizationContext(req);
