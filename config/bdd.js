@@ -12,8 +12,8 @@ var configuration = {
 		"server": "dev-takedoc.cloudapp.net", // You can use 'localhost\\instance' to connect to named instance 
 		"database": "PASSPORT",
 		"options": {
-			"instanceName": "SQLEXPRESS"
-			//"port": 49363,
+			//"instanceName": "SQLEXPRESS"
+			"port": 49363
 			//"database": "PASSPORT"
 			//"encrypt": false
 		}
