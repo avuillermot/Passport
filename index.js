@@ -1,3 +1,4 @@
+console.log("start");
 const path = require('path');
 var moment = require('moment');
 var url = require("url");
@@ -105,10 +106,10 @@ app.put('/:module',function(req, res) {
 	sPassport.checkToken(context, f, res);
 });
 
-/*app.put('/generate/password', function(req, res) {
+app.put('/generate/password', function(req, res) {
 	var context = req.body;
 	sUsers.generatePassword(context, httpConfig.callback, res);
-});*/
+});
 
 //***************************************************
 // authentification sans notion de group
@@ -184,4 +185,4 @@ app.get('/test', function(request, response){
 
 var port = process.env.PORT || 1337;
 app.listen(port);
-
+console.log("end");
