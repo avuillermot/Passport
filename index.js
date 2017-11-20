@@ -157,7 +157,7 @@ app.put('/authenticate/driver', function(req, res){
 	}
 });
 
-app.put('/:module/password', function(req, res){
+/*app.put('/:module/password', function(req, res){
 	var context = httpConfig.getAuthorizationContext(req);
 	context.password = req.body.password;
 	context.oldPassword = req.body.oldPassword;
@@ -176,7 +176,7 @@ app.get('/:module', function(request, response){
 		else sUsers.get(context, httpConfig.callback, response);
 	};
 	sPassport.checkToken(context, f, response);
-});
+});*/
 
 app.get('/test', function(request, response){
 	console.log("test end");
