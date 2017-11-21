@@ -1,7 +1,6 @@
+console.log("start");
 const path = require('path');
-
 var moment = require('moment');
-//var exec = require("child_process").exec;
 var url = require("url");
 var https = require('https');
 var http = require('http');
@@ -15,14 +14,14 @@ global.app = express();
 global.app.use(httpConfig.allowCrossDomain);
 global.app.use(bodyParser.urlencoded({ extended: false }));
 global.app.use(bodyParser.json())
-/*
+
 var sUsers = require(path.resolve(__dirname,"services/user"));
 var sPassport = require(path.resolve(__dirname,"services/passport"));
-*/
+
 
 require(path.resolve(__dirname,"api/apiAuthenticate"));
 require(path.resolve(__dirname,"api/apiMessageBird"));
-/*
+
 var isOver18 = function(birthDate) {
 	var limit = new moment();
 	limit.add(-18, 'years');
@@ -41,7 +40,7 @@ app.post('/',function(req, res) {
 		context.tokenCheckPhone = null;
 		context.phoneChecked = false;
 	}
-	if (context.birthDate != null) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+	if (context.birthDate != null && context.birthDate != undefined) context.birthDate = new moment(context.birthDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
 	if (major == false) {
 		httpConfig.callback(400,"Vous devez être majeur pour accéder aux services.",res);
@@ -116,7 +115,7 @@ app.put('/generate/password', function(req, res) {
 // authentification sans notion de group
 //***************************************************
 app.put('/authenticate/mobile', function(req, res){
-	if (req.body == null || req.body.login === undefined 
+	if ((req.body == null && req.body != undefined) || req.body.login === undefined 
 		|| req.body.password === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
 		var context = {
@@ -145,7 +144,7 @@ app.put('/authenticate/driver', function(req, res){
 	console.log("login:" + req.body.login);
 	console.log("password:" + req.body.password);
 	
-	if (req.body == null || req.body.login === undefined 
+	if ((req.body == null && req.body != undefined) || req.body.login === undefined 
 		|| req.body.password === undefined || req.body.group === undefined) httpConfig.callback(400, {message: "Utilisateur inconnu"}, res);
 	else {
 		var context = {
@@ -159,31 +158,38 @@ app.put('/authenticate/driver', function(req, res){
 });
 
 app.put('/:module/password', function(req, res){
-	var context = httpConfig.getAuthorizationContext(req);
-	context.password = req.body.password;
-	context.oldPassword = req.body.oldPassword;
-	var f = function(code, info, res) {
-		console.log(code);
-		if (code == 200) sUsers.changePassword(context, httpConfig.callback, res);
-		else httpConfig.callback(400,{},res);
-	};
-	sPassport.checkToken(context, f, res);
+	if (req.body == null && req.body != undefined)  {
+		var context = httpConfig.getAuthorizationContext(req);
+		context.password = req.body.password;
+		context.oldPassword = req.body.oldPassword;
+		var f = function(code, info, res) {
+			console.log(code);
+			if (code == 200) sUsers.changePassword(context, httpConfig.callback, res);
+			else httpConfig.callback(400,{},res);
+		};
+		sPassport.checkToken(context, f, res);
+	}
+	else httpConfig.callback(400,{},res);
 });
 
-app.get('/:module', function(request, response){
-	var context = httpConfig.getAuthorizationContext(request);
-	var f = function(code, info, response) {
-		if (code !== 200) httpConfig.callback(code,[],response);
-		else sUsers.get(context, httpConfig.callback, response);
-	};
-	sPassport.checkToken(context, f, response);
+/*app.get('/:module', function(request, response){
+	if (request.body == null && req.body != undefined)  {
+		var context = httpConfig.getAuthorizationContext(request);
+		var f = function(code, info, response) {
+			if (code !== 200) httpConfig.callback(code,[],response);
+			else sUsers.get(context, httpConfig.callback, response);
+		};
+		sPassport.checkToken(context, f, response);
+	}
+	else httpConfig.callback(400,{},response);
 });*/
 
 app.get('/test', function(request, response){
+	console.log("test end");
 	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.end("Hello World5555222333333333333!");
+	response.end("Hello World!");
 });
 
 var port = process.env.PORT || 1337;
 app.listen(port);
-
+console.log("end");
