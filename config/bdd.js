@@ -13,7 +13,7 @@ var configuration = {
 		"database": "PASSPORT",
 		"options": {
 			//"instanceName": "SQLEXPRESS"
-			"port": 49363,
+			"port": 1433,
 			//"database": "PASSPORT"
 			"encrypt": false
 		}
