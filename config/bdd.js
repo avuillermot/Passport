@@ -7,9 +7,9 @@ var poolConfig = {
 var configuration = {
     "mssql": {		
 		"driver": "tedious",
-		"userName": "sa",
+		"userName": "carl",
 		"password": "Kerenann06041979",
-		"server": "dev-takedoc.cloudapp.net", // You can use 'localhost\\instance' to connect to named instance 
+		"server": "Front-carl", // You can use 'localhost\\instance' to connect to named instance 
 		"database": "PASSPORT",
 		"options": {
 			//"instanceName": "SQLEXPRESS"
