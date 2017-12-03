@@ -11,9 +11,9 @@ var configuration = {
 		password: "Kerenann06041979",
 		server: "front-carl.westeurope.cloudapp.azure.com", // You can use 'localhost\\instance' to connect to named instance 
 		options: {
-			port: 49363,
+			//port: 49363,
 			database: "PASSPORT",
-			encrypt: false
+			instancename: 'SQLEXPRESS'
 		}
 	}
 }
