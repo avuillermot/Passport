@@ -10,8 +10,8 @@ var configuration = {
 		userName: "carl",
 		password: "Kerenann06041979",
 		//server: "front-carl",
-		server: "front-carl.westeurope.cloudapp.azure.com", // You can use 'localhost\\instance' to connect to named instance 
-		//server: "52.175.166.28",
+		//server: "front-carl.westeurope.cloudapp.azure.com", // You can use 'localhost\\instance' to connect to named instance 
+		server: "172.16.0.4",
 		options: {
 			port: 49363,
 			database: "PASSPORT"
