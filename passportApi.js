@@ -183,12 +183,13 @@ app.get('/test', function(request, response){
 //********************************
 // run http server
 //********************************	
-/*var options = {
-  key: fs.readFileSync('local.key'),
-  cert: fs.readFileSync('local.cer')
+var path = "C:/Users/tkroot/AppData/Roaming/letsencrypt-win-simple/httpsacme-v01.api.letsencrypt.org/";	
+var options = {
+  key: fs.readFileSync(path + 'carl-move.com-key.pem'),
+  cert: fs.readFileSync(path + 'carl-move.com-crt.pem')
 };
-https.createServer(options, app).listen(httpConfig.portConfig);*/
-http.createServer(app).listen(httpConfig.portConfig);
+https.createServer(options, app).listen(httpConfig.portConfig);
+//http.createServer(app).listen(httpConfig.portConfig);
 
 // Console will print the message
 console.log('Server running at https://127.0.0.1:8082/');
