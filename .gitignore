@@ -1,0 +1,5 @@
+.env
+node_modules/
+local.cer
+local.key
+config/ssl

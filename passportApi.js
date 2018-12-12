@@ -1,3 +1,4 @@
+require('dotenv').config();
 var moment = require('moment');
 var exec = require("child_process").exec;
 var url = require("url");
@@ -15,7 +16,7 @@ var sPassport = require("./services/passport");
 global.app = express();
 global.app.use(httpConfig.allowCrossDomain);
 global.app.use(bodyParser.urlencoded({ extended: false }));
-global.app.use(bodyParser.json())
+global.app.use(bodyParser.json());
 
 require("./api/apiAuthenticate");
 require("./api/apiMessageBird");
@@ -182,8 +183,8 @@ var options = {
   key: fs.readFileSync('local.key'),
   cert: fs.readFileSync('local.cer')
 };
-https.createServer(options, app).listen(httpConfig.portConfig);
-//http.createServer(app).listen(httpConfig.portConfig);
+//https.createServer(options, app).listen(httpConfig.portConfig);
+http.createServer(app).listen(httpConfig.portConfig);
 
 // Console will print the message
-console.log('Server running at https://127.0.0.1:8082/');
+console.log('Server running at http://127.0.0.1:8082/');
